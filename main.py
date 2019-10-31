@@ -16,4 +16,4 @@ Generator.file_parser_ltp(ltp___reportFile, report)
 #optional (output from the datastructure)
 Generator.list_test_cases(report)
 
-Generator.format_xcel_sheet(report, ltp___reportFile)
+Generator.format_excel_sheet(report, ltp___reportFile)
