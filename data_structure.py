@@ -182,7 +182,7 @@ class Generator:
         worksheet.add_chart(chart, "F3")
 
     @staticmethod
-    def format_xcel_sheet(report, ltp_file):
+    def format_excel_sheet(report, ltp_file):
         # Create a workbook
         workbook = Workbook()
         sheet = workbook.active
