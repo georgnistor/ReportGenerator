@@ -59,30 +59,30 @@ class Generator:
 
     @staticmethod
     def file_parser_ltp(report_file, report):
-        file = open(report_file, 'r')
-        for line in file:
-            if Generator.pass_str in line or Generator.fail_str in line or Generator.conf_str in line:
-                words = line.split()
-                if len(words) >= 3:
-                    test_case = TestCase(words[0], words[1], words[2])
-                    module = Module(words[0])
-                    module.append_test_case(test_case)
-                    report.append_module(module)
-            if Generator.total_tests in line:
-                report.append_total_tests(line)
-                words = line.split()
-                report.nrTotalTest = int(words[2])
+        with open(report_file, 'r') as file:
+            for line in file:
+                if Generator.pass_str in line or Generator.fail_str in line or Generator.conf_str in line:
+                    words = line.split()
+                    if len(words) >= 3:
+                        test_case = TestCase(words[0], words[1], words[2])
+                        module = Module(words[0])
+                        module.append_test_case(test_case)
+                        report.append_module(module)
+                if Generator.total_tests in line:
+                    report.append_total_tests(line)
+                    words = line.split()
+                    report.nrTotalTest = int(words[2])
 
-            if Generator.skipped_test in line:
-                report.append_skipped_tests(line)
-                words = line.split()
-                report.nrTotalSkipped = int(words[3])
+                if Generator.skipped_test in line:
+                    report.append_skipped_tests(line)
+                    words = line.split()
+                    report.nrTotalSkipped = int(words[3])
 
-            if Generator.total_failures in line:
-                report.append_total_failures(line)
-                words = line.split()
-                report.nrTotalFailures = int(words[2])
-                report.nrTotalPass = report.nrTotalTest - report.nrTotalFailures - report.nrTotalSkipped
+                if Generator.total_failures in line:
+                    report.append_total_failures(line)
+                    words = line.split()
+                    report.nrTotalFailures = int(words[2])
+                    report.nrTotalPass = report.nrTotalTest - report.nrTotalFailures - report.nrTotalSkipped
 
         report.percentagePass = round(report.nrTotalPass * 100 / report.nrTotalTest, 2)
         report.percentageConf = round(report.nrTotalSkipped * 100 / report.nrTotalTest, 2)
@@ -206,8 +206,8 @@ class Generator:
 
         Generator.append_data_into_cells(sheet, report)
         filename_ltp= ltp_file.split('\\')
-        filename_ltp_no_ext= (filename_ltp[-1].split('.'))[0]
-        output_file= 'l4b-software___testReport' + '___' + filename_ltp_no_ext + '.xlsx'
+        filename_ltp_no_ext = (filename_ltp[-1].split('.'))[0]
+        output_file = 'l4b-software___testReport' + '___' + filename_ltp_no_ext + '.xlsx'
 
         try:
             workbook.save(filename=output_file)
